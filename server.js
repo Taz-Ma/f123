@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// Middleware 
 app.use(express.json());
 MONGODB_URI= "mongodb+srv://3380:3380@tm-1.3rfpsev.mongodb.net/f0815"
 
@@ -21,26 +21,28 @@ mongoose.connect(MONGODB_URI, {
 // DB Item schema
 const itemSchema = new mongoose.Schema({
 
-    name: {type: String, required: true} ,
-    who: {type: String, required: true} 
+    title: { type: String, required: true },
+    author: { type: String, required: true },
+    description: { type: String },
         
 })
-// declare Item
+// declare Item in MongoDB
 const Item = mongoose.model("Item", itemSchema)
 
 
 const router = express.Router()
 
 
-// Add
+// Add Item
 app.use("/", router)
 router.route("/item/add").post((req,res)=>{
 
-        const name = req.body.name
-        const who = req.body.who
+        const title = req.body.title
+        const author = req.body.author
+        const description = req.body.description
    
         const newItem = new Item( {
-            name,who
+            title,author,description
         })
 
         newItem
